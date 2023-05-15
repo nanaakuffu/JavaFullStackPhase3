@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layouts/dashboard :: dashboard( ~{:: #home-main-content} )}"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div class="content" id="home-main-content">
+    <div>
+        <h2>Add/Edit Product</h2>
+        <form method="post" th:action="@{/dashboard/product-categories}">
+            <input hidden="hidden" name="id" th:if="${productCategory != null}" th:value="${productCategory.id}">
+            <div>
+                <label>Name
+                    <input name="name" required th:value="${productCategory == null ? '' : productCategory.name}" type="text">
+                </label>
+            </div>
+            <button th:type="submit">Save</button>
+        </form>
+
+        <h2>Product List</h2>
+        <table th:replace="fragments/fragments :: table(~{::thead},~{::tbody})">
+            <thead>
+            <tr>
+                <th>S/N</th>
+                <th>Name</th>
+                <th>Date Added</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cat,i:${productCategories}">
+                <td th:text="${i.index+1}"></td>
+                <td th:text="${cat.name}"></td>
+                <td th:text="${cat.dateCreated}"></td>
+                <td>
+                    <a th:href="@{/dashboard/product-categories/edit/{pid} (pid=${cat.id})}">Edit</a>
+                    <a th:href="@{/dashboard/product-categories/delete/{pid} (pid=${cat.id})}">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+
+
+        </table>
+    </div>
+</div>
+
+</body>
+
+</html>

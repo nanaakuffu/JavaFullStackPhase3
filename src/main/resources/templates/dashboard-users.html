@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layouts/dashboard :: dashboard( ~{:: #home-main-content} )}"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div class="content" id="home-main-content">
+    <div>
+        <form method="get" th:action="@{/dashboard/users}">
+            <label>Search User
+                <input name="query" required type="text">
+            </label>
+            <button th:type="submit">Search</button>
+        </form>
+
+        <div th:if="${searching == true}">
+            <span th:text="'Showing search results for '"></span><strong th:text="${query}"></strong>
+            <a th:href="@{/dashboard/users}">Clear filter</a>
+        </div>
+
+
+        <table th:if="${users != null and users.size() > 0}"
+               th:replace="fragments/fragments :: table(~{::thead},~{::tbody})">
+            <thead>
+            <tr>
+                <th>S/N</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Date Signed Up</th>
+                <th>User Type</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user,i:${users}">
+                <td th:text="${i.index+1}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.dateCreated}"></td>
+                <td th:text="${user.userType.name}"></td>
+                <td th:if="${user.id != session.user.getId()}"><a th:href="@{/dashboard/users/delete/{pid} (pid=${user.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <div th:unless="${users != null and users.size() > 0}">No items to display</div>
+    </div>
+</div>
+
+</body>
+
+</html>

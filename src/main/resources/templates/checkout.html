@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layouts/store :: store( ~{:: #home-main-content} )}" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div class="product-grid" id="home-main-content">
+
+    <table th:if="${cart != null and cart.products.size() > 0}"
+           th:replace="fragments/fragments :: table(~{::thead},~{::tbody})">
+        <thead>
+        <tr>
+            <th>S/N</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product,i:${cart}">
+            <td th:text="${i.index+1}"></td>
+            <td>
+                <div style="display: flex; flex-direction: column">
+                    <img alt="item display" height="50px" th:src="${product.product.imageUrl}" width="50px">
+                    <span class="name" th:text="${product.product.name}"></span>
+                </div>
+            </td>
+            <td th:text="${product.quantity}"></td>
+            <td><a th:href="@{/store/remove-from-cart/{id} (id=${product.id})}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${cart != null and cart.size() > 0}" >
+        <h2>Total Amount: <strong th:text="'$' + ${T(com.vodafone.sportyshoes.utils.Utils).getTotalCost(cart)}"></strong></h2>
+        <form method="post" action="">
+            <select name="paymentChannel" required>
+                <option value="Visa Card">Visa Card</option>
+                <option value="MasterCard">MasterCard</option>
+                <option value="Paypal">Paypal</option>
+                <option value="Wire Transfer">Wire Transfer</option>
+            </select>
+            <button type="submit">Complete payment</button>
+        </form>
+    </div>
+</div>
+</body>
+
+</html>

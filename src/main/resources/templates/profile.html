@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="/css/style.css" rel="stylesheet">
+    <title>Sporty Shoes - Login</title>
+</head>
+<body style="height: 100dvh; display: flex; align-items: center; flex-direction: column; justify-content: center;">
+<h2>Sporty Shoes</h2>
+<div class="error" th:if="${error != null}" th:text="${error}"></div>
+
+<form style="border: 1px solid #706e6e; border-radius: 8px; width: 50%; padding: 20px" action="/auth/profile" method="post">
+    <div>
+        <label>Name:
+            <input name="name" required th:value="${session.user.getName()}" type="text">
+        </label>
+    </div>
+    <div>
+        <label>Email:
+            <input disabled name="email" required th:value="${session.user.getEmail()}" type="email">
+        </label>
+    </div>
+
+    <div>
+        <label>Password:
+            <input name="password" required type="password">
+        </label>
+    </div>
+    <div>
+        <label>Repeat Password:
+            <input name="newPassword" type="password">
+        </label>
+    </div>
+    <div>
+        <label>Repeat Password:
+            <input name="newPassword2" type="password">
+        </label>
+    </div>
+    <button type="submit">Update Details</button>
+    <a th:href="@{/}">Back to main page</a>
+
+</form>
+</body>
+</html>

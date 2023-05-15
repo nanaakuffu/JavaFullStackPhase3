@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="/css/style.css" rel="stylesheet">
+    <title>Sporty Shoes - Login</title>
+</head>
+<body style="height: 100dvh; display: flex; align-items: center; flex-direction: column; justify-content: center;">
+<h2>Sporty Shoes</h2>
+<div class="error" th:if="${error != null}" th:text="${error}"></div>
+
+<form style="border: 1px solid #706e6e; border-radius: 8px; width: 30%; padding: 20px" action="/auth/login" method="post">
+    <div>
+        <label>Email:
+            <input name="email" required type="email">
+        </label>
+    </div>
+    <div>
+        <label>Password:
+            <input name="password" required type="password">
+        </label>
+    </div>
+    <button type="submit">Login</button>
+
+    <a th:href="@{/auth/signup}">Don't have an Account? Signup</a>
+</form>
+</body>
+</html>

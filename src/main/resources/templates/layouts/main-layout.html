@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="mainLayout(title, resources, header, nav, mainContent, footer)"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="/css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="https://www.freepnglogos.com/uploads/shoes-png/dance-shoes-png-transparent-dance-shoes-images-5.png">
+    <title th:replace="${title}">Sporty Shoes</title>
+    <th:block th:replace="${resources} ?: ~{}"></th:block>
+</head>
+<body>
+
+<div style="display: flex; flex-direction: row; width: 100%">
+    <nav th:replace="${nav} ?: ~{}"></nav>
+    <section class="main-content">
+        <header th:replace="${header} ?: ~{}"></header>
+
+        <div style="padding: 15px 5px;">
+            <div class="error" th:if="${error != null}" th:text="${error}"></div>
+            <div class="success" th:if="${message != null}" th:text="${message}"></div>
+        </div>
+
+        <main th:replace="${mainContent} ?: ~{}"></main>
+    </section>
+</div>
+
+<footer th:replace="${footer} ?: ~{}">
+</footer>
+</body>
+</html>

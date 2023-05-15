@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layouts/dashboard :: dashboard( ~{:: #home-main-content} )}"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div class="content" id="home-main-content">
+    <div>
+        <h2>Add/Edit Product</h2>
+        <form method="post" th:action="@{/dashboard/products}">
+            <input hidden="hidden" name="id" th:if="${product != null}" th:value="${product.id}">
+            <div>
+                <label>Name
+                    <input name="name" required th:value="${product == null ? '' : product.name}" type="text">
+                </label>
+            </div>
+            <div>
+                <label>Description
+                    <textarea rows="5" name="description" th:text="${product == null ? '' : product.description}"
+                              th:value="${product == null ? '' : product.description}"></textarea>
+                </label>
+            </div>
+            <div>
+                <label>Price (Cents)
+                    <input name="price" required th:value="${product == null ? '' : product.price}" type="number">
+                </label>
+            </div>
+<!--            <div>-->
+<!--                <label>Size-->
+<!--                    <input name="size" required th:value="${product == null ? '' : product.size}" type="number">-->
+<!--                </label>-->
+<!--            </div>-->
+            <div>
+                <label>Image URL
+                    <input name="imageUrl" required th:value="${product == null ? '' : product.imageUrl}" type="text">
+                </label>
+            </div>
+            <div>
+                <label>Category
+                    <select name="category" required>
+                        <option th:each="category,i:${categories}" th:selected="${product != null and product.category != null and product.category.id == category.id} ? true : false" th:text="${category.name}"
+                                th:value="${category.id}"></option>
+                    </select>
+                </label>
+            </div>
+            <button th:type="submit">Save</button>
+        </form>
+
+        <h2>Product List</h2>
+        <table th:replace="fragments/fragments :: table(~{::thead},~{::tbody})">
+            <thead>
+            <tr>
+                <th>S/N</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+<!--                <th>Size</th>-->
+                <th>Category</th>
+                <th>Image URL</th>
+                <th>Date Added</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product,i:${products}">
+                <td th:text="${i.index+1}"></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.description}"></td>
+                <td th:text="${'$' + product.price/100.0}"></td>
+<!--                <td th:text="${product.size}"></td>-->
+                <td th:text="${product.category == null ? '' : product.category.name}"></td>
+                <td><img alt="item pic" height="50px" th:src="${product.imageUrl}" width="50px"/></td>
+                <td th:text="${product.dateCreated}"></td>
+                <td>
+                    <a th:href="@{/dashboard/products/edit/{pid} (pid=${product.id})}">Edit</a>
+                    <a th:href="@{/dashboard/products/delete/{pid} (pid=${product.id})}">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+
+
+        </table>
+    </div>
+</div>
+
+</body>
+
+</html>

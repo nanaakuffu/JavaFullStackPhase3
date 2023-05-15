@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="dashboard(mainContent)" th:replace="~{layouts/main-layout :: mainLayout(
+                                                ~{:: title},
+                                                ~{:: #home-static-resources},
+                                                ~{:: .header},
+                                                ~{:: nav},
+                                                ~{:: #home-main-content},
+                                                ~{:: .footer}
+                                               )}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sporty Shoes - Admin Dashboard</title>
+</head>
+<body>
+
+<section class="main-content">
+    <nav th:replace="fragments/fragments :: sidebar"></nav>
+    <div>
+        <div class="header" th:replace="/fragments/fragments :: header"></div>
+        <div style="padding: 15px 5px;">
+            <div class="error" th:if="${error != null}" th:text="${error}"></div>
+            <div class="success" th:if="${message != null}" th:text="${message}"></div>
+        </div>
+        <main th:insert="${mainContent} ?: ~{}"></main>
+    </div>
+</section>
+
+<div class="footer" th:replace="/fragments/fragments :: footer"></div>
+</body>
+</html>

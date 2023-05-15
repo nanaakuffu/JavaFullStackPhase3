@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layouts/dashboard :: dashboard( ~{:: #home-main-content} )}"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div class="stat-grid content" id="home-main-content">
+    <span th:replace="/fragments/fragments :: stat('Users', ${userCount})"></span>
+    <span th:replace="/fragments/fragments :: stat('Products', ${productCount})"></span>
+    <span th:replace="/fragments/fragments :: stat('Product Categgories', ${productCategoryCount})"></span>
+    <span th:replace="/fragments/fragments :: stat('Revenue', ${revenue})"></span>
+    <span th:replace="/fragments/fragments :: stat('Items Sold', ${itemsSold})"></span>
+</div>
+
+</body>
+
+</html>

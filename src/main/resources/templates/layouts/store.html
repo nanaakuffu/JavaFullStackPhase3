@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="store(mainContent)" th:replace="~{layouts/main-layout :: mainLayout(
+                                                ~{:: title},
+                                                ~{:: #home-static-resources},
+                                                ~{:: .header},
+                                                ~{:: #home-nav},
+                                                ~{:: #home-main-content},
+                                                ~{:: .footer}
+                                               )}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sporty Shoes - Store</title>
+</head>
+<body>
+<div class="header" th:replace="/fragments/fragments :: header"></div>
+<div style="padding: 15px 5px;">
+    <div class="error" th:if="${error != null}" th:text="${error}"></div>
+    <div class="success" th:if="${message != null}" th:text="${message}"></div>
+</div>
+<section>
+    <main th:insert="${mainContent} ?: ~{}"></main>
+</section>
+
+<div class="footer" th:replace="/fragments/fragments :: footer"></div>
+</body>
+</html>

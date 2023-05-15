@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layouts/dashboard :: dashboard( ~{:: #home-main-content} )}"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div class="content" id="home-main-content">
+    <div>
+        <h2>Search Order</h2>
+        <form method="post" th:action="@{/dashboard/orders}">
+            <div>
+                <label>Start Date
+                    <input name="startDate" required type="date">
+                </label>
+            </div>
+            <div>
+                <label>End Date
+                    <input name="endDate" required type="date">
+                </label>
+            </div>
+            <label>Category
+                <select name="categoryId" required>
+                    <option th:each="category,i:${categories}" th:selected="${product != null and product.category != null and product.category.id == category.id} ? true : false" th:text="${category.name}"
+                            th:value="${category.id}"></option>
+                </select>
+            </label>
+            <button th:type="submit">Search</button>
+        </form>
+
+
+        <h2>Order List</h2>
+        <table th:replace="fragments/fragments :: table(~{::thead},~{::tbody})">
+            <thead>
+            <tr>
+                <th>S/N</th>
+                <th>Customer</th>
+                <th>Products</th>
+                <th>Total Payment</th>
+                <th>Payment Method</th>
+                <th>Date Purchased</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order,i:${orders}" th:with="products=${T(com.vodafone.sportyshoes.utils.Utils).getProducts(order)}">
+                <td th:text="${i.index+1}"></td>
+                <td th:text="${order.user.name}"></td>
+                <td th:utext="${products}"></td>
+                <td th:text="${order.amountPaid}"></td>
+                <td th:text="${order.paymentChannel}"></td>
+                <td th:text="${order.dateCreated}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+
+</html>

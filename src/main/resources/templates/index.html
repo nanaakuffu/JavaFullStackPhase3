@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layouts/store :: store( ~{:: #home-main-content} )}" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="product-grid" id="home-main-content">
+    <span class="product-item" th:each="product:${products}">
+        <img alt="item display" th:src="${product.imageUrl}">
+        <span class="categories" th:text="${product.category.name}"></span>
+        <span class="name" th:text="${product.name}"></span>
+        <a class="btn btn-primary" th:href="@{/product/add-to-cart/{pid} (pid=${product.id})}"
+           th:if="${session.user != null and !session.user.userType.name().equals('ADMIN')}">Add to Cart</a>
+    </span>
+</div>
+</body>
+
+</html>

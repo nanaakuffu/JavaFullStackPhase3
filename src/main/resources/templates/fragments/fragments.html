@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <title>Sporty Shoes - Header</title>
+</head>
+<body>
+
+<header class="header" th:fragment="header">
+    <div style="display: flex; flex-direction: row; justify-content: center; align-items: center">
+        <a href="/">
+            <img alt="logo"
+                 height="45px"
+                 src="https://www.freepnglogos.com/uploads/shoes-png/dance-shoes-png-transparent-dance-shoes-images-5.png"
+                 width="45px">
+        </a>
+        <h2 style="margin-left: 20px">Sporty Shoes</h2>
+    </div>
+    <div>
+        <a style="margin-right: 20px;"
+           th:href="@{/store/checkout}" th:if="${session.user != null and !session.user.userType.name().equals('ADMIN')}"
+           th:with="cartSize=${T(com.vodafone.sportyshoes.utils.Utils).getCartCount(session.user)}"
+           th:text="'Cart: ' + ${cartSize}">Cart: </a>
+
+        <a style="margin-right: 20px;" th:href="@{/dashboard}"
+           th:if="${session.user != null and session.user.userType.name().equals('ADMIN')}">Dashboard</a>
+
+        <span style="margin-right: 20px" th:if="${session.user != null}">
+            <a th:href="@{/auth/logout}">Logout</a>
+        </span>
+
+        <span th:if="${session.user != null}">
+            <a th:href="@{/auth/profile}" th:text="${session.user.name}"></a>
+        </span>
+
+        <span th:unless="${session.user != null}">
+            <a th:href="@{/auth/login}">Login</a>
+        </span>
+    </div>
+</header>
+
+<aside class="sidebar" th:fragment="sidebar">
+    <ul>
+        <li><a th:href="@{/dashboard}">Dashboard</a></li>
+        <li><a th:href="@{/dashboard/product-categories}">Product Categories</a></li>
+        <li><a th:href="@{/dashboard/products}">Products</a></li>
+        <li><a th:href="@{/dashboard/users}">Users</a></li>
+        <li><a th:href="@{/dashboard/orders}">Orders</a></li>
+    </ul>
+</aside>
+
+<span class="stat" th:fragment="stat(key,value)">
+    <span class="value" th:text="${value ?: 0}"></span>
+    <span class="key" th:text="${key}"></span>
+</span>
+
+<footer class="footer" th:fragment="footer">
+    Sporty Shoes &copy; 2023
+</footer>
+
+<table class="styled-table" th:fragment="table(headers,body)">
+    <thead th:replace="${headers}"></thead>
+    <tbody th:replace="${body}"></tbody>
+</table>
+
+</body>
+</html>
